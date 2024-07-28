@@ -9,7 +9,7 @@ class GildedRose {
 
     public void updateQuality() {
         for (Item item : items) {
-            if (isItemImprovingOverTime(item)) {
+            if (!isItemImprovingOverTime(item)) {
                 if (item.quality > 0) {
                     if (!item.name.equals("Sulfuras, Hand of Ragnaros")) {
                         decrementQuality(item);
@@ -60,8 +60,8 @@ class GildedRose {
     }
 
     private boolean isItemImprovingOverTime(Item item) {
-        return !item.name.equals("Aged Brie")
-                && !item.name.equals("Backstage passes to a TAFKAL80ETC concert");
+        return item.name.equals("Aged Brie")
+                || item.name.equals("Backstage passes to a TAFKAL80ETC concert");
     }
 
     private void decrementSellIn(Item item) {
