@@ -11,7 +11,7 @@ class GildedRose {
         for (Item item : items) {
             if (!isItemImprovingOverTime(item)) {
                 if (item.quality > 0) {
-                    if (!item.name.equals("Sulfuras, Hand of Ragnaros")) {
+                    if (!isHandOfRagnaros(item)) {
                         decrementQuality(item);
                     }
                 }
@@ -35,7 +35,7 @@ class GildedRose {
                 }
             }
 
-            if (!item.name.equals("Sulfuras, Hand of Ragnaros")) {
+            if (!isHandOfRagnaros(item)) {
                 decrementSellIn(item);
             }
 
@@ -43,7 +43,7 @@ class GildedRose {
                 if (!isAgedBrie(item)) {
                     if (!isTicketConcert(item)) {
                         if (item.quality > 0) {
-                            if (!item.name.equals("Sulfuras, Hand of Ragnaros")) {
+                            if (!isHandOfRagnaros(item)) {
                                 decrementQuality(item);
                             }
                         }
@@ -57,6 +57,10 @@ class GildedRose {
                 }
             }
         }
+    }
+
+    private boolean isHandOfRagnaros(Item item) {
+        return item.name.equals("Sulfuras, Hand of Ragnaros");
     }
 
     private boolean isTicketConcert(Item item) {
