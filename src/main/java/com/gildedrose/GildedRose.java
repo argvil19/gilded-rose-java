@@ -19,7 +19,7 @@ class GildedRose {
                 if (item.quality < 50) {
                     incrementQuality(item);
 
-                    if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+                    if (isTicketConcert(item)) {
                         if (item.sellIn < 11) {
                             if (item.quality < 50) {
                                 incrementQuality(item);
@@ -40,8 +40,8 @@ class GildedRose {
             }
 
             if (item.sellIn < 0) {
-                if (!item.name.equals("Aged Brie")) {
-                    if (!item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+                if (!isAgedBrie(item)) {
+                    if (!isTicketConcert(item)) {
                         if (item.quality > 0) {
                             if (!item.name.equals("Sulfuras, Hand of Ragnaros")) {
                                 decrementQuality(item);
@@ -59,9 +59,16 @@ class GildedRose {
         }
     }
 
+    private boolean isTicketConcert(Item item) {
+        return item.name.equals("Backstage passes to a TAFKAL80ETC concert");
+    }
+
+    private boolean isAgedBrie(Item item) {
+        return item.name.equals("Aged Brie");
+    }
+
     private boolean isItemImprovingOverTime(Item item) {
-        return item.name.equals("Aged Brie")
-                || item.name.equals("Backstage passes to a TAFKAL80ETC concert");
+        return isAgedBrie(item) || isTicketConcert(item);
     }
 
     private void decrementSellIn(Item item) {
