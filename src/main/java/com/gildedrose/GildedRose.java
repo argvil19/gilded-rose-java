@@ -1,61 +1,19 @@
 package com.gildedrose;
 
+import java.util.Arrays;
+import com.gildedrose.ItemTypes.EnrichedItem;
+
 class GildedRose {
-    Item[] items;
+    EnrichedItem[] items;
 
     public GildedRose(Item[] items) {
-        this.items = items;
+        this.items = Arrays.asList(items).stream().map(item -> ItemFactory.createItem(item))
+                .toArray(EnrichedItem[]::new);
     }
 
     public void updateQuality() {
-        for (Item item : items) {
-            if (!isItemImprovingOverTime(item)) {
-                if (item.quality > 0) {
-                    if (!isHandOfRagnaros(item)) {
-                        decrementQuality(item);
-                    }
-                }
-            } else {
-                if (item.quality < 50) {
-                    incrementQuality(item);
-
-                    if (isTicketConcert(item)) {
-                        if (item.sellIn < 11) {
-                            if (item.quality < 50) {
-                                incrementQuality(item);
-                            }
-                        }
-
-                        if (item.sellIn < 6) {
-                            if (item.quality < 50) {
-                                incrementQuality(item);
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (!isHandOfRagnaros(item)) {
-                decrementSellIn(item);
-            }
-
-            if (item.sellIn < 0) {
-                if (!isAgedBrie(item)) {
-                    if (!isTicketConcert(item)) {
-                        if (item.quality > 0) {
-                            if (!isHandOfRagnaros(item)) {
-                                decrementQuality(item);
-                            }
-                        }
-                    } else {
-                        item.quality = item.quality - item.quality;
-                    }
-                } else {
-                    if (item.quality < 50) {
-                        incrementQuality(item);
-                    }
-                }
-            }
+        for (EnrichedItem item : items) {
+            item.age();
         }
     }
 
